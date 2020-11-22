@@ -186,7 +186,7 @@ func newPeerConnection(i int) {
 	<-gatherCompletePromise
 
 
-	//Send SDP Answer
+	//Send SDP Offer
     reqBody := RequestBody{}
     reqBody.Action = "INIT"
     reqBody.SDP = offer
