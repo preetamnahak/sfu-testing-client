@@ -14,7 +14,6 @@ import (
 
 	"github.com/pion/webrtc/v3"
 	"github.com/gorilla/websocket"
-	"github.com/voskos/voskos-rtc-sfu/constant"
 	"github.com/pion/webrtc/v3/pkg/media"
 	//"github.com/pion/webrtc/v3/pkg/media/ivfreader"
 	"github.com/pion/webrtc/v3/pkg/media/oggreader"
@@ -23,6 +22,16 @@ import (
 const (
 	audioFileName = "output.ogg"
 )
+
+type RequestBody struct {
+    Action string `json:"action"`
+    UserID string `json:"user_id"`
+    RoomID string `json:"room_id"`
+    Body map[string]string `json:"body"`
+    SDP webrtc.SessionDescription `json:"sdp"`
+    ICE_Candidate *webrtc.ICECandidate `json:"ice_candidate"`
+
+}
 
 var addr = flag.String("addr", "localhost:8080", "http service address")
 var peerConnection *webrtc.PeerConnection
@@ -178,7 +187,7 @@ func newPeerConnection(i int) {
 
 
 	//Send SDP Answer
-    reqBody := constant.RequestBody{}
+    reqBody := RequestBody{}
     reqBody.Action = "INIT"
     reqBody.SDP = offer
     reqBody.RoomID = "Room - 1"
